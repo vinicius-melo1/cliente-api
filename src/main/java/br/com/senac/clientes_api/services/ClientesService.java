@@ -7,6 +7,7 @@ import br.com.senac.clientes_api.repositorios.ClientesRepositorio;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientesService {
@@ -31,9 +32,11 @@ public class ClientesService {
     }
 
     public Clientes listarById(Long id) {
-        if (clientesRepositorio.existsById(id)) {
-            return clientesRepositorio.findById(id).get();
+        Optional<Clientes> retorno = clientesRepositorio.findById(id);
+        if(retorno.isPresent()){
+            return retorno.get();
         }
+
         throw new RuntimeException("Cliente não existe!");
     }
 
